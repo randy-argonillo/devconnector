@@ -1,0 +1,3 @@
+{
+  "mongoConnString": "mongodb+srv://zamiek:nyradzkie@mern-axdwd.mongodb.net/test?retryWrites=true&w=majority"
+}
