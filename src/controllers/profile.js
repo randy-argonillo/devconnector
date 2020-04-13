@@ -134,6 +134,21 @@ async function deleteEducation(req, res) {
   }
 }
 
+async function getGithubProfile(req, res) {
+  try {
+    const { username } = req.params;
+    const profile = await profileService.getGithubProfile(username);
+    return res.json(profile);
+  } catch (e) {
+    if(e.response.status === 404) {
+      return res.status(404).json({ message: 'Github account not found.' });
+    }
+    
+    console.log(e);
+    return res.status(500).json({ error: 'Server Error' });
+  }
+}
+
 module.exports = {
   getProfile,
   addUpdateProfile,
@@ -142,4 +157,5 @@ module.exports = {
   deleteExperience,
   addEducation,
   deleteEducation,
+  getGithubProfile,
 };

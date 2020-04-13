@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
 
-const { validateBody } = require('../middlewares/validation');
+const { validateBody, validateParams } = require('../middlewares/validation');
 const verifyToken = require('../middlewares/verifyToken');
 const controller = require('../controllers/profile');
 
@@ -70,7 +70,7 @@ router.post(
     from: Joi.string().isoDate().required(),
     to: Joi.string().isoDate(),
     current: Joi.boolean(),
-    description: Joi.string()
+    description: Joi.string(),
   }),
   controller.addEducation
 );
@@ -81,5 +81,18 @@ router.post(
   @access    protected
 */
 router.delete('/education/:edu_id', verifyToken, controller.deleteEducation);
+
+/*
+  @route     GET api/profiles/github/:username
+  @desc      Get github profile
+  @access    public
+*/
+router.get(
+  '/github/:username',
+  validateParams({
+    username: Joi.string().required(),
+  }),
+  controller.getGithubProfile
+);
 
 module.exports = router;

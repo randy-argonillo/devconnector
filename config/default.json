@@ -1,3 +1,7 @@
 {
-  "mongoConnString": "mongodb+srv://zamiek:nyradzkie@mern-axdwd.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoConnString": "mongodb+srv://zamiek:nyradzkie@mern-axdwd.mongodb.net/test?retryWrites=true&w=majority",
+  "github": {
+    "client_id": "f0e2223a809cf7abb1d5",
+    "client_secret": "fa82cb23e1f81f9f7fcecc918934fa105fd92878"
+  }
 }

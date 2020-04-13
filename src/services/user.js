@@ -8,6 +8,15 @@ async function getUserByEmail(email) {
   }
 }
 
+async function getUserById(userId) {
+  try {
+    return User.findById(userId);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
-  getUserByEmail
+  getUserByEmail,
+  getUserById
 };

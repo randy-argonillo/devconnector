@@ -1,5 +1,7 @@
 const fp = require('lodash/fp');
+const axios = require('axios').default;
 
+const config = require('config');
 const Profile = require('../models/profile');
 
 async function getProfile(userId) {
@@ -51,9 +53,9 @@ async function addExperience(profile, experience) {
 async function deleteExperience(profile, id) {
   try {
     const { experience } = profile;
-    profile.experience = experience.filter(exp => exp.id !== id)
+    profile.experience = experience.filter((exp) => exp.id !== id);
     return profile.save();
-  } catch(e) {
+  } catch (e) {
     throw e;
   }
 }
@@ -70,9 +72,30 @@ async function addEducation(profile, education) {
 async function deleteEducation(profile, id) {
   try {
     const { education } = profile;
-    profile.education = education.filter(edu => edu.id !== id)
+    profile.education = education.filter((edu) => edu.id !== id);
     return profile.save();
-  } catch(e) {
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function getGithubProfile(username) {
+  try {
+    const { client_id, client_secret } = config.get('github');
+    const profile = await axios.get(
+      `https://api.github.com/users/${username}/repos`,
+      {
+        params: {
+          per_page: 5,
+          sort: 'created:asc',
+          client_id,
+          client_secret,
+        },
+      }
+    );
+
+    return profile.data;
+  } catch (e) {
     throw e;
   }
 }
@@ -123,5 +146,6 @@ module.exports = {
   addExperience,
   deleteExperience,
   addEducation,
-  deleteEducation
+  deleteEducation,
+  getGithubProfile,
 };
